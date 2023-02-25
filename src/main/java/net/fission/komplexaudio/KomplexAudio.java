@@ -1,6 +1,7 @@
 package net.fission.komplexaudio;
 
 import com.mojang.logging.LogUtils;
+import net.fission.komplexaudio.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -49,10 +50,11 @@ public class KomplexAudio
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        ModItems.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
+        //ITEMS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -72,6 +74,11 @@ public class KomplexAudio
     {
         if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS)
             event.accept(EXAMPLE_BLOCK_ITEM);
+
+        if (event.getTab() == CreativeModeTabs.INGREDIENTS)
+        {
+            event.accept(ModItems.HROUDA);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
